@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/logo.png'
@@ -10,11 +10,10 @@ const SignIn = () => {
   const [userLogin] = useUserLoginMutation()
   const navigate = useNavigate()
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
 
-    const form = event.target
+    const form = event.target as HTMLFormElement
     const email = form?.email?.value
     const password = form.password.value
 
@@ -26,8 +25,9 @@ const SignIn = () => {
     setError('')
 
     try {
-      await userLogin({ email, password }).unwrap()
+      const res = await userLogin({ email, password }).unwrap()
       toast.success('User login successfull.')
+      localStorage.setItem('token', JSON.stringify(res.token))
       navigate('/users')
     } catch (error) {
       toast.error('Somthing is wrong. Try again')

@@ -10,11 +10,10 @@ const SignUp = () => {
   const [userRegistration] = useUserRegistrationMutation()
   const navigate = useNavigate()
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
 
-    const form = event.target
+    const form = event.target as HTMLFormElement
     const email = form?.email?.value
     const password = form.password.value
 
@@ -26,8 +25,9 @@ const SignUp = () => {
     setError('')
 
     try {
-      await userRegistration({ email, password }).unwrap()
+      const res = await userRegistration({ email, password }).unwrap()
       toast.success('User registration successfull.')
+      localStorage.setItem('token', JSON.stringify(res.token))
       navigate('/users')
     } catch (error) {
       toast.error('Somthing is wrong. Try again')

@@ -9,12 +9,6 @@ const Input = ({
   type?: 'text' | 'password'
   error?: string
 }) => {
-  // border: 1px solid var(--Brand-300, #D6BBFB);
-  // box-shadow: 0px 0px 0px 4px #F4EBFF, 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-
-  // border: 1px solid var(--Error-300, #FDA29B);
-  // box-shadow: ;
-
   return (
     <div>
       <div className="label">{label}</div>
